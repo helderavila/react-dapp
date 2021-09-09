@@ -4,7 +4,7 @@ import Greeter from './artifacts/contracts/Greeter.sol/Greeter.json'
 
 import './App.css';
 
-const greeterAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3"
+const greeterAddress = "0x8F4Db159a3ED3CAEDeb1b256a69b57027957F228"
 
 function App() {
   const [greetingValue, setGreetingValue] = useState('')
@@ -33,6 +33,7 @@ function App() {
     if (!greetingValue) return
 
     if (typeof window.ethereum !== 'undefined') {
+     try {
       await requestAccount()
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const signer = provider.getSigner()
@@ -41,6 +42,9 @@ function App() {
       setGreetingValue('')
       await transaction.wait()
       fetchGreeting()
+     } catch (err) {
+       console.log(err)
+     }
     }
   } 
 
